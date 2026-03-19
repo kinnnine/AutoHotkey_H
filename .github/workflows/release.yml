@@ -14,9 +14,11 @@ jobs:
           ref: 'v2.0'
       - name: Add msbuild to PATH.
         uses: microsoft/setup-msbuild@v2
-      - name: Building solution using MSBuild.
+      - name: Add nuget to PATH.
+        uses: nuget/setup-nuget@v2
+      - name: Building solution using msbuild.
         run: |
-          msbuild AutoHotkeyx.sln /restore
+          nuget restore AutoHotkeyx.sln
           msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=x64
           msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=Win32
           move bin\AutoHotkey32.dll AutoHotkey32.dll
