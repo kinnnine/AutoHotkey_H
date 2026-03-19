@@ -16,6 +16,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
       - name: Building solution using MSBuild.
         run: |
+          msbuild AutoHotkeyx.sln /restore
           msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=x64
           msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=Win32
           move bin\AutoHotkey32.dll AutoHotkey32.dll
