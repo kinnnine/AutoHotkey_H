@@ -1,0 +1,30 @@
+name: Build AutoHotKey_H DLLs
+on:
+  push:
+    tags:
+      - 'v2.[0-99]+.[0-99]+'
+
+jobs:
+  stable-build:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout v2.0 branch.
+        uses: actions/checkout@v6
+        with:
+          ref: 'v2.0'
+      - name: Add msbuild to PATH.
+        uses: microsoft/setup-msbuild@v2
+      - name: Building solution using MSBuild.
+        run: |
+          msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=x64
+          msbuild AutoHotkeyx.sln /p:Configuration=MT_ReleaseDll /p:Platform=Win32
+          move bin\AutoHotkey32.dll AutoHotkey32.dll
+          move bin\AutoHotkey64.dll AutoHotkey64.dll
+      - name: Publishing to github releases.
+        uses: svenstaro/upload-release-action@v2
+        with:
+          release_name: ${{ github.ref }}
+          draft: true
+          tag: ${{ github.ref }}
+          file_glob: true
+          file: AutoHotkey*.dll
