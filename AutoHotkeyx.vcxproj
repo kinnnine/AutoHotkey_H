@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\VC-LTL.5.3.1\build\native\VC-LTL.props" Condition="Exists('packages\VC-LTL.5.3.1\build\native\VC-LTL.props')" />
+  <Import Project="packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.props" Condition="Exists('packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.props')" />
   <PropertyGroup>
     <ProjectGuid>{31335317-2533-40F5-ACD8-361075C7C4CC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -343,6 +345,10 @@
       <TreatWarningAsError Condition="!$(ConfigDebug)">true</TreatWarningAsError>
       <EnableFiberSafeOptimizations Condition="$(ConfigRelease)">true</EnableFiberSafeOptimizations>
       <DebugInformationFormat Condition="$(ConfigDebug)">EditAndContinue</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='MT_ReleaseDll|Win32'">MinSpace</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='MT_ReleaseDll|x64'">MinSpace</Optimization>
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='MT_ReleaseDll|Win32'">MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='MT_ReleaseDll|x64'">MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions Condition="$(ConfigDll)">_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -467,5 +473,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\YY-Thunks.1.1.9\build\native\YY-Thunks.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\YY-Thunks.1.1.9\build\native\YY-Thunks.targets'))" />
+    <Error Condition="!Exists('packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.props'))" />
+    <Error Condition="!Exists('packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.targets'))" />
+    <Error Condition="!Exists('packages\VC-LTL.5.3.1\build\native\VC-LTL.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\VC-LTL.5.3.1\build\native\VC-LTL.props'))" />
   </Target>
+  <Import Project="packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.targets" Condition="Exists('packages\YY.NuGet.Import.Helper.1.0.1\build\native\YY.NuGet.Import.Helper.targets')" />
 </Project>
